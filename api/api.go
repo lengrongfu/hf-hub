@@ -8,7 +8,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/schollz/progressbar/v3"
 	"io"
 	"log"
 	"net/http"
@@ -18,6 +17,8 @@ import (
 	"strconv"
 	"strings"
 	"text/template"
+
+	"github.com/schollz/progressbar/v3"
 )
 
 type RepoType int
@@ -301,7 +302,7 @@ func (b *ApiBuilder) FromCache(cache *Cache) (*ApiBuilder, error) {
 	}
 
 	return &ApiBuilder{
-		endpoint:    "https://huggingface.co",
+		endpoint:    endpoint,
 		urlTemplate: "{{.Endpoint}}/{{.RepoId}}/resolve/{{.Revision}}/{{.Filename}}",
 		cache:       cache,
 		token:       token,

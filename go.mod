@@ -1,4 +1,4 @@
-module github.com/seasonjs/hf-hub
+module github.com/lengrongfu/hf-hub
 
 go 1.21
 

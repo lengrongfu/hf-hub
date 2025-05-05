@@ -4,11 +4,12 @@
 package api_test
 
 import (
-	"github.com/seasonjs/hf-hub/api"
 	"io"
 	"os"
 	"strings"
 	"testing"
+
+	"github.com/lengrongfu/hf-hub/api"
 )
 
 func assert(t *testing.T, a any, b any) {
