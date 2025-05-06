@@ -401,6 +401,7 @@ type Api struct {
 	noCDNRedirectClient *http.Client
 	progress            bool
 	meta                *Metadata
+	w                   http.ResponseWriter
 }
 
 func NewApi() (*Api, error) {
@@ -515,8 +516,10 @@ func (a *Api) downloadTempFile(url string, progressbar *progressbar.ProgressBar)
 
 	var mw io.Writer
 
-	if progressbar != nil {
+	if progressbar != nil && a.w == nil {
 		mw = io.MultiWriter(file, progressbar)
+	} else if progressbar != nil && a.w != nil {
+		mw = io.MultiWriter(file, a.w, progressbar)
 	} else {
 		mw = file
 	}
@@ -554,6 +557,10 @@ func (a *Api) Clone() *Api {
 	newApi.cache = &newCache
 	newApi.client = &newClient
 	return &newApi
+}
+
+func (r *Api) WithHttpResponse(w http.ResponseWriter) {
+	r.w = w
 }
 
 type ApiRepo struct {
