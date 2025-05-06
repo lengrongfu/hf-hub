@@ -520,6 +520,11 @@ func (a *Api) downloadTempFile(url string, progressbar *progressbar.ProgressBar)
 		mw = io.MultiWriter(file, progressbar)
 	} else if progressbar != nil && a.w != nil {
 		mw = io.MultiWriter(file, a.w, progressbar)
+		for key, values := range res.Header {
+			for _, value := range values {
+				a.w.Header().Add(key, value)
+			}
+		}
 	} else {
 		mw = file
 	}
